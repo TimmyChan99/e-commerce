@@ -17,11 +17,13 @@ const Layout = ({ children, title }: LayoutProps) => {
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Header />
-			<main className="container mx-auto px-4">
-				{children}
-			</main>
-			<Footer />
+			<div>
+				<Header />
+				<main className="container mx-auto bg-gray-300">
+					{children}
+				</main>
+				<Footer />
+			</div>
 		</>
 	)
 }
