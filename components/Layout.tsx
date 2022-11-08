@@ -17,7 +17,7 @@ const Layout = ({ children, title }: LayoutProps) => {
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<div>
+			<div className='min-h-screen flex flex-col justify-between'>
 				<Header />
 				<main className="container mx-auto bg-gray-300">
 					{children}
