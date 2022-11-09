@@ -1,4 +1,4 @@
-type product = {
+type productType = {
 	name: string;
 	price: number;
 	brand: string;
@@ -12,7 +12,7 @@ type product = {
 };
 
 type dataTypes = {
-	products: product[];
+	products: productType[];
 };
 
 const data: dataTypes = {
@@ -93,3 +93,4 @@ const data: dataTypes = {
 };
 
 export default data;
+export type { productType };

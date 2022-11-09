@@ -1,11 +1,11 @@
-import React from 'react';
+import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import data from '../../utils/data';
-import Layout from '../../components/Layout';
 import Link from 'next/link';
 import Image from 'next/image';
+import data from '../../utils/data';
+import Layout from '../../components/Layout';
 
-const ProductDetails = () => {
+const ProductDetails: NextPage = () => {
 	const { query } = useRouter();
 	const { slug } = query;
 	const products = data.products;
