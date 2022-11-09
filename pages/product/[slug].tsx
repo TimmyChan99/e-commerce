@@ -2,14 +2,31 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import data from '../../utils/data';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import data, { productType } from '../../utils/data';
 import Layout from '../../components/Layout';
+import { addItem, selectCartItems } from '../../redux/cart/cart';
 
 const ProductDetails: NextPage = () => {
+	const cartItems = useAppSelector(selectCartItems);
+	const dispatch = useAppDispatch();
+
 	const { query } = useRouter();
 	const { slug } = query;
 	const products = data.products;
-	const product = products.find((p) => p.slug === slug);
+	const product = products.find((p) => p.slug === slug) as productType;
+
+	const handleAddToCart = () => {
+		const existItem = cartItems.find((x) => x.slug === product?.slug);
+		const quantity = existItem ? existItem.quantity + 1 : 1;
+		const item = { ...product, quantity };
+		if (product.countInStock >= quantity) {
+			dispatch(addItem(item));
+		}
+		if (product.countInStock < quantity) {
+			alert('Sorry, this product is out of stock');
+		}
+	};
 
 	if (!product) {
 		return <Layout title="Produt Not Found">Produt Not Found</Layout>;
@@ -50,7 +67,10 @@ const ProductDetails: NextPage = () => {
 							<span>Status:</span>
 							<span>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</span>
 						</div>
-						<button type='button' className='primary-button w-full'>Add to Cart</button>
+						<button
+						type='button'
+						onClick={handleAddToCart} 
+						className='primary-button w-full'>Add to Cart</button>
 					</div>
 				</div>
 			</div>

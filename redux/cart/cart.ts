@@ -3,15 +3,17 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { productType } from '../../utils/data';
 import { RootState } from '../store';
 
+type cartItemType = productType & {quantity: number};
+
 const initialState = {
- cartItems: [] as Array<productType>,
+ cartItems: [] as Array<cartItemType>,
 }
 
 const cart = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		addItem: (state, action: PayloadAction<productType>) => {
+		addItem: (state, action: PayloadAction<cartItemType>) => {
 			// action.payload is the { product, quantity } object
 			const newItem = action.payload;
 			const existItem = state.cartItems.find((x) => x.slug === newItem.slug);
