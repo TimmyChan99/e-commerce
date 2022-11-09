@@ -11,7 +11,7 @@ const Header = () => {
 			<nav>
 				<ul className='flex items-center'>
 					<li className='p-2'>
-						<Link href='/'>
+						<Link href='/cart'>
 							Cart
 							{cartItems.length > 0 && (
 								<span className='ml-1 bg-red-600 rounded-full text-xs text-white px-2 py-1 font-bold'>

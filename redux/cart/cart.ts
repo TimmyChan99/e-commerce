@@ -20,11 +20,18 @@ const cart = createSlice({
       const cartItems = state.cartItems;
 			const updatedCartItems = existItem ? cartItems.map((x) => x.slug === existItem.slug ? newItem : x) : [...cartItems, newItem];
 			return { ...state, cartItems: updatedCartItems };
+		},
+
+		removeItem: (state, action: PayloadAction<string>) => {
+			// action.payload is the slug
+			const slug = action.payload;
+			const cartItems = state.cartItems.filter((x) => x.slug !== slug);
+			return { ...state, cartItems };
 		}
 	}
 });
 
-export const {addItem} = cart.actions
+export const { addItem, removeItem} = cart.actions
 
 export default cart.reducer
 
