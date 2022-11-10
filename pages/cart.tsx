@@ -6,8 +6,10 @@ import Layout from "../components/Layout"
 import { selectCartItems } from "../redux/cart/cart"
 import { useAppSelector, useAppDispatch } from "../redux/hooks"
 import { removeItem } from "../redux/cart/cart"
+import { useRouter } from "next/router"
 
 const Cart: NextPage = () => {
+	const router = useRouter();
 	const cartItems = useAppSelector(selectCartItems);
 	const dispatch = useAppDispatch();
 	const itemsPrice = cartItems.reduce((a, item) => a + item.price * item.quantity, 0);
@@ -25,9 +27,9 @@ const Cart: NextPage = () => {
 			<td className='p-5 text-right'>{item.quantity}</td>
 			<td className='p-5 text-right'>${item.price}</td>
 			<td className='p-5 text-right'>
-				<button type='button' 
-				onClick={() => handleRemoveFromCart(item.slug)}
-				className='p-2 border rounded'>-</button>
+				<button type='button'
+					onClick={() => handleRemoveFromCart(item.slug)}
+					className='p-2 border rounded'>-</button>
 			</td>
 		</tr>
 	));
@@ -43,7 +45,23 @@ const Cart: NextPage = () => {
 	return (
 		<Layout title="My Shopping Cart">
 			<h1>My Shopping Cart</h1>
-			<div>Total Price: ${itemsPrice}</div>
+			<div className="card p-5">
+				<ul>
+					<li>
+						<div className="pb-3 text-xl">
+							<div>Total Price: ${itemsPrice}</div>
+						</div>
+					</li>
+					<li>
+						<button
+							onClick={() => router.push('/auth/login?redirect=/shipping')}
+							className="primary-button w-full"
+						>
+							Check Out
+						</button>
+					</li>
+				</ul>
+			</div>
 			<div className='grid md:grid-cols-4 md:gap-5'>
 				<div className='overlow-x-auto md:col-span-2'>
 					<table className='table-auto w-full'>
