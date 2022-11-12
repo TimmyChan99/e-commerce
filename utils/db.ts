@@ -16,7 +16,6 @@ async function dbConnect() {
   const db = await connect(process.env.MONGODB_URI as string)
   
   connection.isConnected = db.connections[0].readyState
-  console.log('dbConnect()', db)
 }
 
 export default dbConnect;

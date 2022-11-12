@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 type productType = {
 	name: string;
 	price: number;
@@ -28,7 +30,7 @@ const data: dataTypes = {
     {
       name: "Admin User",
       email: "admin@dev.co",
-      password: "123456",
+      password: bcrypt.hashSync("123456", 10),
       isAdmin: true,
     },
   ],
