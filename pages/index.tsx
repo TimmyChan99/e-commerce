@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import ProductsList from "../components/products/productsList";
 
 export default function Home() {
+
   return (
     <Layout>
     <div className=''> 
