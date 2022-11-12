@@ -11,11 +11,27 @@ type productType = {
 	category: string;
 };
 
+type userType = {
+  name: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+};
+
 type dataTypes = {
 	products: productType[];
+  users: userType[];
 };
 
 const data: dataTypes = {
+  users: [
+    {
+      name: "Admin User",
+      email: "admin@dev.co",
+      password: "123456",
+      isAdmin: true,
+    },
+  ],
   products: [
     {
       name: 'Free Shirt',
