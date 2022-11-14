@@ -5,12 +5,12 @@ import dbConnect from "../../../utils/db";
 import bcrypt from "bcrypt";
 import { JWT } from "next-auth/jwt";
 
-type UserTypes = {
-	id: number;
-	name: string;
-	email: string;
-	isAdmin: boolean;
-};
+// type UserTypes = {
+// 	id: number;
+// 	name: string;
+// 	email: string;
+// 	isAdmin: boolean;
+// };
 
 type sessionTypes = {
 	token: JWT;
@@ -41,7 +41,7 @@ const authOptions: NextAuthOptions = {
 			async jwt({token, user }) {
 				console.log('token from jwt', token);
 				if (user) token.id = user.id;
-				if (user) token.isAdmin = user.isAdmin;
+				// if (user) token.isAdmin = user.isAdmin;
 				return token;
 			},
 			async session({session, token}: sessionTypes) {

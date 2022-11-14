@@ -1,4 +1,4 @@
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 type productType = {
 	name: string;
@@ -13,27 +13,27 @@ type productType = {
 	category: string;
 };
 
-// type userType = {
-//   name: string;
-//   email: string;
-//   password: string;
-//   isAdmin: boolean;
-// };
+type userType = {
+  name: string;
+  email: string;
+ password: string;
+  isAdmin: boolean;
+};
 
 type dataTypes = {
 	products: productType[];
-  // users: userType[];
+  users: userType[];
 };
 
 const data: dataTypes = {
-  // users: [
-  //   {
-  //     name: "Admin User",
-  //     email: "admin@dev.co",
-  //     password: bcrypt.hashSync("123456", 10),
-  //     isAdmin: true,
-  //   },
-  // ],
+  users: [
+    {
+      name: "Admin User",
+      email: "admin@dev.co",
+      password: bcrypt.hashSync("123456", 10),
+      isAdmin: true,
+    },
+  ],
   products: [
     {
       name: 'Free Shirt',

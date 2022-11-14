@@ -1,9 +1,12 @@
 import React from 'react'
-import data from '../../utils/data';
 import ProductItem from './ProductItem';
+import  { productType }	from  '../../utils/data' ;
 
-const ProductsList = () => {
-	const products = data.products;
+type ProductsListProps = {
+	products: productType[];
+};
+
+const ProductsList = ({ products }: ProductsListProps) => {
 	const productList = products.map((product) => {
 		return <ProductItem key={product.name} product={product} />;
 	});
@@ -14,5 +17,6 @@ const ProductsList = () => {
 		</ul>
 	)
 }
+
 
 export default ProductsList;
