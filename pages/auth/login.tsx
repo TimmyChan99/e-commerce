@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../../components/Layout';
 import { useForm } from 'react-hook-form';
+import { signIn, useSession } from 'next-auth/react';
 
 type Inputs = {
 	email: string;
@@ -11,8 +12,25 @@ type Inputs = {
 const Login = () => {
 	const { handleSubmit, register, formState: { errors } } = useForm<Inputs>();
 
-	const onSubmit = (data: Inputs) => {
-		console.log(data);
+	const { data: session } = useSession();
+
+	useEffect(() => {
+		if (session) {
+			console.log('session', session);
+		}
+	}, []);
+ 
+	const onSubmit = async (data: Inputs) => {
+		try {
+			const result = await signIn('credentials', {
+				redirect: false,
+				email: data.email,
+				password: data.password,
+			});
+			console.log(result);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (

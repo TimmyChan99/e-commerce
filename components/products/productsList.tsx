@@ -1,8 +1,8 @@
 import React from 'react'
 import data from '../../utils/data';
-import ProductItem from '../../components/products/productItem';
+import ProductItem from './ProductItem';
 
-const productsList = () => {
+const ProductsList = () => {
 	const products = data.products;
 	const productList = products.map((product) => {
 		return <ProductItem key={product.name} product={product} />;
@@ -15,4 +15,4 @@ const productsList = () => {
 	)
 }
 
-export default productsList
+export default ProductsList;

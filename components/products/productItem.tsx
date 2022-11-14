@@ -17,7 +17,7 @@ type productProps = {
 	};
 };
 
-const productItem = ({ product }: productProps) => {
+const ProductItem = ({ product }: productProps) => {
 	return (
 		<div className='card'>
 			<Link href={`/product/${product.slug}`}>
@@ -41,4 +41,4 @@ const productItem = ({ product }: productProps) => {
 	)
 }
 
-export default productItem
+export default ProductItem;
