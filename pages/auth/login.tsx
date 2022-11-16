@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout';
 import { useForm } from 'react-hook-form';
 import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 type Inputs = {
 	email: string;
@@ -11,23 +12,25 @@ type Inputs = {
 
 const Login = () => {
 	const { handleSubmit, register, formState: { errors } } = useForm<Inputs>();
-
 	const { data: session } = useSession();
+	const [loading, setLoading] = useState(false);
+	const router = useRouter();
+	const { redirect } = router.query;
 
 	useEffect(() => {
-		if (session) {
-			console.log('session', session);
+		if (session?.user) {
+			router.push(redirect ? redirect.toString() : '/');
 		}
-	}, []);
- 
+	}, [router, session, redirect]);
+
 	const onSubmit = async (data: Inputs) => {
 		try {
-			const result = await signIn('credentials', {
+			setLoading(true);
+			await signIn('credentials', {
 				redirect: false,
 				email: data.email,
 				password: data.password,
 			});
-			console.log(result);
 		} catch (error) {
 			console.log(error);
 		}
@@ -76,7 +79,7 @@ const Login = () => {
 					)}
 				</div>
 				<div className="mb-4 ">
-					<button className="primary-button">Login</button>
+					<button className="primary-button">{loading ? 'Login In...' : 'Login'}</button>
 				</div>
 				<div className="mb-4 ">
 					Don&apos;t have an account? &nbsp;

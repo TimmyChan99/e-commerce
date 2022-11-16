@@ -32,8 +32,8 @@ const authOptions: NextAuthOptions = {
 				return token;
 			},
 			async session({session, token}) {
-        session.id = token.id;
-        session.isAdmin = token.isAdmin;
+        if (token?.id) session.id = token.id;
+        if (token?.isAdmin) session.isAdmin = token.isAdmin;
 				return session;
 			}
 		}
