@@ -3,19 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import User from "../../../models/User";
 import dbConnect from "../../../utils/db";
 import bcrypt from "bcrypt";
-import { JWT } from "next-auth/jwt";
 
-// type UserTypes = {
-// 	id: number;
-// 	name: string;
-// 	email: string;
-// 	isAdmin: boolean;
-// };
-
-type sessionTypes = {
-	token: JWT;
-	session: any;
-};
 
 const authOptions: NextAuthOptions = {
 	providers: [
@@ -39,15 +27,13 @@ const authOptions: NextAuthOptions = {
 	},
    callbacks: {
 			async jwt({token, user }) {
-				console.log('token from jwt', token);
 				if (user) token.id = user.id;
-				// if (user) token.isAdmin = user.isAdmin;
+				if (user) token.isAdmin = user.isAdmin;
 				return token;
 			},
-			async session({session, token}: sessionTypes) {
-				console.log('session', session);
-				session.id = token.id;
-				session.isAdmin = token.isAdmin;
+			async session({session, token}) {
+        session.id = token.id;
+        session.isAdmin = token.isAdmin;
 				return session;
 			}
 		}
