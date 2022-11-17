@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,13 +6,16 @@ import data, { productType } from '../../utils/data';
 import Layout from '../../components/Layout';
 import { addItem, selectCartItems } from '../../redux/cart/cart';
 
-const ProductDetails: NextPage = () => {
+type ProductProps = {
+	products: productType[];
+};
+
+const ProductDetails = ({ products }: ProductProps) => {
 	const cartItems = useAppSelector(selectCartItems);
 	const dispatch = useAppDispatch();
-
 	const { query } = useRouter();
 	const { slug } = query;
-	const products = data.products;
+	
 	const product = products.find((p) => p.slug === slug) as productType;
 
 	const handleAddToCart = () => {
@@ -79,3 +81,22 @@ const ProductDetails: NextPage = () => {
 }
 
 export default ProductDetails;
+
+export async function getStaticPaths() {
+	const products = data.products;
+	const paths = products.map((product) => ({
+		params: { slug: product.slug },
+	}));
+	return {
+		paths,
+		fallback: false,
+	};
+}
+
+ 
+export async function getStaticProps() {
+	const products = data.products;
+	return {
+		props: { products: products },
+	}
+}  
