@@ -1,9 +1,12 @@
-import Link from 'next/link'
-import React from 'react'
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import React from 'react';
 import { selectCartItems } from '../redux/cart/cart';
 import { useAppSelector } from '../redux/hooks';
+import DropMenu from './DropMenu';
 
 const Header = () => {
+	const { data: session, status } = useSession();
 	const cartItems = useAppSelector(selectCartItems);
 	return (
 		<header className='flex h-12 items-center justify-between shadow-md px-4'>
@@ -22,7 +25,11 @@ const Header = () => {
 							)}
 						</Link>
 					</li>
-					<li className='p-2'><Link href='/auth/login'>Login</Link></li>
+					{status === 'authenticated' && session ? 
+					(<li>
+						<DropMenu username={session.user?.name as string} />
+					</li>) :
+					(<li className='p-2'><Link href='/auth/login'>Login</Link></li>)}
 				</ul>
 			</nav>
 		</header>
