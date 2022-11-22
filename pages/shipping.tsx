@@ -100,3 +100,7 @@ const Shipping = () => {
 }
 
 export default Shipping;
+
+Shipping.auth = {
+  redirect: '/auth/login',
+};
