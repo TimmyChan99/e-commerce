@@ -1,5 +1,8 @@
 import { useForm } from 'react-hook-form';
-import Layout from '../components/Layout'
+import Layout from '../components/Layout';
+import { setShippingAddress } from '../redux/user/user';
+import { useAppDispatch } from '../redux/hooks';
+import router from 'next/router';
 
 type Inputs = {
 	fullName: string;
@@ -11,9 +14,11 @@ type Inputs = {
 
 const Shipping = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+  const dispatch = useAppDispatch();
 
 	const onSubmit = (data: Inputs) => {
-		console.log(data);
+    dispatch(setShippingAddress(data));
+    router.push('/payment');
 	};
 
 	return (
