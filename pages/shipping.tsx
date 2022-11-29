@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { setShippingAddress } from '../redux/user/user';
 import { useAppDispatch } from '../redux/hooks';
+import router from 'next/router';
 
 type Inputs = {
 	fullName: string;
@@ -17,6 +18,7 @@ const Shipping = () => {
 
 	const onSubmit = (data: Inputs) => {
     dispatch(setShippingAddress(data));
+    router.push('/payment');
 	};
 
 	return (

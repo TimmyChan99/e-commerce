@@ -14,12 +14,16 @@ type userType = {
 	paymentMethod: string;
 };
 
+type PaymentMethod = 'PayPal' | 'Stripe' | 'CashOnDelivery';
+
 const initialState: userType = {
 	user : '',
 	shippingAddress: {} as userType['shippingAddress'],
-	paymentMethod: '',
+	paymentMethod: '' as PaymentMethod,
 }
 
+let paymentMethod = 'oo';
+console.log(paymentMethod);
 const user = createSlice({
 	name: 'user',
 	initialState,
@@ -27,11 +31,16 @@ const user = createSlice({
 		setShippingAddress: (state, action: PayloadAction<userType['shippingAddress']>) => {
 			// action.payload is the shippingAddress
 			return { ...state, shippingAddress: action.payload };
+		},
+
+		setPaymentMethod: (state, action: PayloadAction<userType['paymentMethod']>) => {
+			// action.payload is the paymentMethod
+			return { ...state, paymentMethod: action.payload };
 		}
 	}
 });
 
-export const { setShippingAddress } = user.actions
+export const { setShippingAddress, setPaymentMethod } = user.actions
 
 export default user.reducer
 
