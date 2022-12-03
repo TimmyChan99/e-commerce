@@ -1,22 +1,24 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import data, { productType } from '../../utils/data';
+import { productType } from '../../utils/data';
 import Layout from '../../components/Layout';
 import { addItem, selectCartItems } from '../../redux/cart/cart';
+import dbConnect from '../../utils/db';
+import Product from '../../models/Product';
 
 type ProductProps = {
-	products: productType[];
-};
+	product: productType & {
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	_id: string;
+};}
 
-const ProductDetails = ({ products }: ProductProps) => {
+const ProductDetails = ({ product }: ProductProps) => {
 	const cartItems = useAppSelector(selectCartItems);
 	const dispatch = useAppDispatch();
-	const { query } = useRouter();
-	const { slug } = query;
-	
-	const product = products.find((p) => p.slug === slug) as productType;
+
 
 	const handleAddToCart = () => {
 		const existItem = cartItems.find((x) => x.slug === product?.slug);
@@ -70,9 +72,9 @@ const ProductDetails = ({ products }: ProductProps) => {
 							<span>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</span>
 						</div>
 						<button
-						type='button'
-						onClick={handleAddToCart} 
-						className='primary-button w-full'>Add to Cart</button>
+							type='button'
+							onClick={handleAddToCart}
+							className='primary-button w-full'>Add to Cart</button>
 					</div>
 				</div>
 			</div>
@@ -82,21 +84,20 @@ const ProductDetails = ({ products }: ProductProps) => {
 
 export default ProductDetails;
 
-export async function getStaticPaths() {
-	const products = data.products;
-	const paths = products.map((product) => ({
-		params: { slug: product.slug },
-	}));
-	return {
-		paths,
-		fallback: false,
-	};
-}
-
- 
-export async function getStaticProps() {
-	const products = data.products;
-	return {
-		props: { products: products },
+export async function getServerSideProps(context: { params: { slug: string}; }) {
+	const { params } = context;
+	const { slug } = params;
+	await dbConnect();
+	const product = await Product.findOne({ slug }).lean();
+	const convertDocTobj = (doc: { _id: {}, createdAt: {}, updatedAt: {} }) => {
+		doc._id = doc._id.toString();
+		doc.createdAt = doc.createdAt.toString();
+		doc.updatedAt = doc.updatedAt.toString();
+		return doc;
 	}
-}  
+	return {
+		props: {
+			product: product ? convertDocTobj(product) : null
+		}
+	}
+}
