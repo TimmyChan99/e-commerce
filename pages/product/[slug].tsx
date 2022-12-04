@@ -6,28 +6,32 @@ import Layout from '../../components/Layout';
 import { addItem, selectCartItems } from '../../redux/cart/cart';
 import dbConnect from '../../utils/db';
 import Product from '../../models/Product';
+import axios from 'axios';
 
 type ProductProps = {
 	product: productType & {
-	createdAt: string;
-	updatedAt: string;
-	__v: number;
-	_id: string;
-};}
+		createdAt: string;
+		updatedAt: string;
+		__v: number;
+		_id: string;
+	};
+}
 
 const ProductDetails = ({ product }: ProductProps) => {
 	const cartItems = useAppSelector(selectCartItems);
 	const dispatch = useAppDispatch();
 
 
-	const handleAddToCart = () => {
+	const handleAddToCart = async () => {
 		const existItem = cartItems.find((x) => x.slug === product?.slug);
 		const quantity = existItem ? existItem.quantity + 1 : 1;
 		const item = { ...product, quantity };
-		if (product.countInStock >= quantity) {
+		const { data } = await axios.get(`/api/product/${product._id}`);
+
+		if (data.countInStock >= quantity) {
 			dispatch(addItem(item));
 		}
-		if (product.countInStock < quantity) {
+		if (data.countInStock < quantity) {
 			alert('Sorry, this product is out of stock');
 		}
 	};
@@ -84,7 +88,7 @@ const ProductDetails = ({ product }: ProductProps) => {
 
 export default ProductDetails;
 
-export async function getServerSideProps(context: { params: { slug: string}; }) {
+export async function getServerSideProps(context: { params: { slug: string }; }) {
 	const { params } = context;
 	const { slug } = params;
 	await dbConnect();
