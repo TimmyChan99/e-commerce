@@ -22,8 +22,6 @@ const initialState: userType = {
 	paymentMethod: '' as PaymentMethod,
 }
 
-let paymentMethod = 'oo';
-console.log(paymentMethod);
 const user = createSlice({
 	name: 'user',
 	initialState,

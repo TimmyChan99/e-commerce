@@ -37,7 +37,7 @@ const data: dataTypes = {
   products: [
     {
       name: 'Free Shirt',
-      slug: 'free-shirt',
+      slug: 'freeshirt',
       category: 'Shirts',
       image: '/images/shirt1.jpg',
       price: 70,

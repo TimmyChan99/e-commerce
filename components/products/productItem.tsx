@@ -32,9 +32,7 @@ const ProductItem = ({ product }: productProps) => {
 				</Link>
 				<p className='font-bold'>${product.price}</p>
 				<p className='font-bold'>{product.brand}</p>
-				<button type='button' className='primary-button'>
-					Add to Cart
-				</button>
+				<p className='font-bold text-amber-500'>rating: {product.rating}</p>
 			</div>
 
 		</div>
