@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import router from 'next/router';
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
@@ -41,7 +42,9 @@ const Payment = () => {
 				>
 					Back
 				</button>
-				<button className="primary-button">Next</button>
+				<button className="primary-button">
+					<Link href="/placeOrder">Next</Link>
+				</button>
 			</div>
 		</form>
 	</Layout>
