@@ -1,4 +1,4 @@
-## E-commerce V1
+## E-commerce V1(tutorial)
 E-commerce app
 
 ## Built With
